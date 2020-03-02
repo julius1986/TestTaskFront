@@ -5,7 +5,7 @@ const testUsers = [
   { id: 2, name: "Lena" }
 ];
 
-function Users(state = {users:testUsers}, action) {
+export default function Users(state = {users:testUsers}, action) {
   switch (action.type) {
     case DELETE_USER_BY_ID:
         let listOfUsers = state.filter(el => el.id !== action.value);
