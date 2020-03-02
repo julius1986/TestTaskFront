@@ -1,13 +1,12 @@
 import React from 'react';
 import './index.css';
-import { Provider } from "react-redux"
-import store from "../../sotre";
+import UserForm from "../UserForm"
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">test</div>
-    </Provider>
+      <div className="App">
+        <UserForm />
+      </div>
   );
 }
 
