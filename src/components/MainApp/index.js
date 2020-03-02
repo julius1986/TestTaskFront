@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react'
 import './index.css';
 import UserForm from "../UserForm"
+import EventButton from "../EventButton"
 
-function App() {
-  return (
+class App extends Component {
+  state = {formIsShow:false}
+  toggleForm = () => {
+    this.setState(state=>({      
+      formIsShow:!state.formIsShow
+    }))
+  }
+  render() {
+    let form = this.state.formIsShow?(<UserForm/>):(<EventButton toggle={this.toggleForm}/>)
+    return (
       <div className="App">
-        <UserForm />
+        {form}
       </div>
-  );
+    );
+  }
 }
-
 export default App;
