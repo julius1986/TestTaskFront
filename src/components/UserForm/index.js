@@ -1,5 +1,7 @@
 import React from 'react'
 
 export default function(){
-    return <h1>This is test header</h1>
+    return <form>
+        This is test header<input type="text" placeholder="insert name"/>
+        </form>
 }

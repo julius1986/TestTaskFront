@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     let form = this.state.formIsShow?(<UserForm/>):(<EventButton toggle={this.toggleForm}/>)
     return (
-      <div className="App">
+      <div className="App container">
         {form}
       </div>
     );

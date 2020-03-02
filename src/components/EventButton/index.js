@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function(props){
-    return (<button onClick={props.toggle}>Show form</button>)
+    return (<button className="btn btn-success" onClick={props.toggle}>Show form</button>)
 }
