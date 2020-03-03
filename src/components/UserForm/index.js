@@ -7,7 +7,7 @@ export default class UserForm extends React.Component{
     }
     render(){
     return (<form>
-        This is test header<input type="text" placeholder="insert name"/>
+        First name: <input name="firstName" type="text" placeholder="insert name"/><br/>
         <button className="btn btn-success" onClick={this.addUser}>Send data</button>
         </form>)
     }
