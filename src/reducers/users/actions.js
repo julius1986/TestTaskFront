@@ -1,5 +1,5 @@
-export const DELETE_USER_BY_ID = "DELETE_USER_BY_ID";
+export const ADD_USER = "ADD_USER";
 
-export function deleteUserById(id){
-    return {type:DELETE_USER_BY_ID, value:id}
+export function deleteUserById(user){
+    return { type: ADD_USER, value: user };
 }

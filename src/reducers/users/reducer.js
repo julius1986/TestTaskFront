@@ -1,16 +1,11 @@
-import {DELETE_USER_BY_ID} from "./actions"
+import { ADD_USER } from "./actions";
 
-const testUsers = [
-  { id: 1, name: "Grisha" },
-  { id: 2, name: "Lena" }
-];
-
-export default function Users(state = {users:testUsers}, action) {
+export default function Users(state = {users:[]}, action) {
   switch (action.type) {
-    case DELETE_USER_BY_ID:
-        let listOfUsers = state.filter(el => el.id !== action.value);
-        return { ...state, users: listOfUsers };
+    case ADD_USER:
+      let users = [...state.users].push(action.value);
+      return { ...state, users };
     default:
-        return state;
+      return state;
   }
 }
