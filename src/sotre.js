@@ -1,10 +1,10 @@
-import {combineReducers, createStore} from "redux";
-import usersReducer from './reducers/Users/reducer'
-import userFormReducer from "./reducers/UserForm/reducer"
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import usersReducer from './reducers/Users/reducer';
+import userFormReducer from "./reducers/UserForm/reducer";
+import thunk from "redux-thunk";
 
 const cReducer = combineReducers({ usersReducer, userFormReducer });
 const store = createStore(
   cReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+  applyMiddleware(thunk));
 export default store;
