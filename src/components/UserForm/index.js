@@ -1,13 +1,13 @@
 import React from 'react'
 import {connect} from "react-redux"
 import {setField} from "../../reducers/UserForm/actions"
-import {addUser} from "../../reducers/Users/actions"
+import {fetchAddUser} from "../../reducers/Users/actions"
 
 class UserForm extends React.Component{
     
     addUser = (e) =>{
         e.preventDefault();
-        this.props.addUser(this.props.fields);
+        this.props.addUser("http://localhost:6123/users", this.props.fields);
     }
     
     handleInputChange = e => {
@@ -22,7 +22,7 @@ class UserForm extends React.Component{
         First name: <input onChange={this.handleInputChange} name="firstName" type="text" placeholder="insert first name"/><br/>
         Last name: <input onChange={this.handleInputChange} name="lastName" type="text" placeholder="insert last name"/><br/>
         Email: <input onChange={this.handleInputChange} name="email" type="text" placeholder="insert Email"/><br/>
-        Date: <input onChange={this.handleInputChange} name="date" type="text" placeholder="insert date"/><br/>
+        Date: <input onChange={this.handleInputChange} name="eventDate" type="text" placeholder="insert date"/><br/>
         <button className="btn btn-success" onClick={this.addUser}>Send data</button>
         </form>)
     }
@@ -34,7 +34,7 @@ const mapState = state => {
 const mapActions = dispatch => {
   return ({
       setField: fieldValue => dispatch(setField(fieldValue)),
-      addUser: user => dispatch(addUser(user))
+      addUser: (url, user) => dispatch(fetchAddUser(url, user))
   });
 };
 export default connect(mapState, mapActions)(UserForm);
