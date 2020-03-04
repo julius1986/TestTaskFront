@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import './index.css';
 import UserForm from "../UserForm"
 import EventButton from "../EventButton"
+import "rc-datepicker/lib/style.css";
+
 
 class App extends Component {
   state = {formIsShow:false}
