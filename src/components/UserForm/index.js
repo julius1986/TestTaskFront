@@ -7,12 +7,13 @@ import InputField from "../InputField"
 import Label from "../Label"
 import Message from "../Message"
 import {checkMail} from "../../utils/checkMail"
+import {SERVER_URL} from "../../config"
 
 class UserForm extends React.Component{
     state = { user:{firstName:"", lastName:"", email:"", eventDate:""}, resultMessage:null}    
     addUser = async (e) =>{
         e.preventDefault();
-        let res = await this.props.addUser("http://localhost:6123/users", this.state.user)
+        let res = await this.props.addUser(SERVER_URL+"/users", this.state.user)
         
         res?
             this.setState({...this.state, resultMessage:"User was added"}):
