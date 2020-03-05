@@ -1,32 +1,110 @@
 import React from 'react'
 import {connect} from "react-redux"
-import {setField} from "../../reducers/UserForm/actions"
 import {fetchAddUser} from "../../reducers/Users/actions"
 import "moment/locale/it.js";
 import { DatePickerInput } from "rc-datepicker";
+import InputField from "../InputField"
+import Label from "../Label"
+import Message from "../Message"
+import {checkMail} from "../../utils/checkMail"
 
 class UserForm extends React.Component{
-    
-    addUser = (e) =>{
+    state = { user:{firstName:"", lastName:"", email:"", eventDate:""}, resultMessage:null}    
+    addUser = async (e) =>{
         e.preventDefault();
-        this.props.addUser("http://localhost:6123/users", this.props.fields);
+        let res = await this.props.addUser("http://localhost:6123/users", this.state.user)
+        
+        res?
+            this.setState({...this.state, resultMessage:"User was added"}):
+            this.setState({ ...this.state, resultMessage: "Cant add user" });
+        
+        setTimeout(()=>{
+            this.setState({...this.state, resultMessage:null})
+        },2000)
+
+        console.log(res);
+        
     }
     
     handleInputChange = e => {
         const target = e.target;
         const value = target.value;
         const name = target.name;    
-        this.props.setField({[name]: value})
+        this.setState({user:{...this.state.user, [name]: value}})
     }
     //Date: <input onChange={this.handleInputChange} name="eventDate" type="text" placeholder="insert date"/><br/>
     render(){
-    return (<form>
-        First name: <input onChange={this.handleInputChange} name="firstName" type="text" placeholder="insert first name"/><br/>
-        Last name: <input onChange={this.handleInputChange} name="lastName" type="text" placeholder="insert last name"/><br/>
-        Email: <input onChange={this.handleInputChange} name="email" type="text" placeholder="insert Email"/><br/>
-        <button className="btn btn-success" onClick={this.addUser}>Send data</button>
-        <DatePickerInput name="eventDate" value={this.props.eventDate} onChange={(jsDate)=>this.props.setField({eventDate: jsDate})} />
-        </form>)
+    return (
+      <form>
+        <div className="form-group row">
+          <Label text="First name" />
+          <InputField
+            onChange={this.handleInputChange}
+            name="firstName"
+            type="text"
+            placeholder="insert first name"
+          />
+          <Message
+            className="text-danger col-sm-5"
+            isShow={this.state.user.firstName}
+            text="Wrong first name"
+          />
+        </div>
+        <div className="form-group row">
+          <Label text="Last name: " />
+          <InputField
+            onChange={this.handleInputChange}
+            name="lastName"
+            type="text"
+            placeholder="insert last name"
+          />
+          <Message
+            className="text-danger col-sm-5"
+            isShow={this.state.user.lastName}
+            text="Wrong last name"
+          />
+        </div>
+        <div className="form-group row">
+          <Label text="Email: " />
+          <InputField
+            onChange={this.handleInputChange}
+            name="email"
+            type="text"
+            placeholder="insert Email"
+          />
+          <Message
+            className="text-danger col-sm-5"
+            isShow={checkMail(this.state.user.email)}
+            text="Wrong email"
+          />
+        </div>
+        <div className="form-group row">
+          <Label text="Date:" />
+          <DatePickerInput
+            name="eventDate"
+            value={this.state.user.eventDate}
+            onChange={jsDate =>
+              this.setState({ user: { ...this.state.user, eventDate: jsDate } })
+            }
+          />
+          <Message
+            className="text-danger col-sm-5"
+            isShow={this.state.user.eventDate}
+            text="Wrong date"
+          />
+        </div>
+        <div className="form-group row">
+          <button className="btn btn-primary mb-2" onClick={this.addUser}>
+            Send data
+          </button>
+          <Message
+            className="text-info col-sm-5"
+            isShow={!this.state.resultMessage}
+            text={this.state.resultMessage}
+          />
+        </div>
+      </form>
+    );
     }
 }
 
@@ -35,7 +113,6 @@ const mapState = state => {
 }
 const mapActions = dispatch => {
   return ({
-      setField: fieldValue => dispatch(setField(fieldValue)),
       addUser: (url, user) => dispatch(fetchAddUser(url, user))
   });
 };
